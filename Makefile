@@ -1,4 +1,6 @@
-TARGET = sample
+# ← make TARGET=xxx で上書き可能（デフォルトは main）
+#TARGET ?= template
+TARGET ?= main
 
 $(TARGET): 
 	latexmk $(TARGET)
@@ -7,7 +9,7 @@ v:
 	vim $(TARGET).tex
 
 clean:
-	latexmk -C
+	latexmk -c
 
 prev:
 	open -a preview $(HOME)/Desktop/$(TARGET).pdf 
