@@ -1,0 +1,17 @@
+# macOS固有ファイル
+.DS_Store
+
+# LaTeX ビルド生成ファイル（中間・出力）
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+*.pdf
+
+# latexmk 設定ファイル
+.latexmkrc
