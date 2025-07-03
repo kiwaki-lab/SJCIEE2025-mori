@@ -12,6 +12,7 @@
 *.bbl
 *.blg
 *.pdf
+*.dvi
 
 # latexmk 設定ファイル
 .latexmkrc
