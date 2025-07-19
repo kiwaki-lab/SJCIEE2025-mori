@@ -13,6 +13,7 @@
 \usepackage[dvipdfmx]{graphicx,xcolor}               % for platex
 %\usepackage{graphicx,xcolor}                        % for lualatex 
 \usepackage{secdot}
+\usepackage{float}
 
 \sectiondot{subsection}
 \columnsep=12pt \columnseprule=0pt \jot=0pt
@@ -55,121 +56,121 @@
 {\Large 
 % 講演番号刷り入れ用余白を作るために\rule で空白を挿入しています．
 % 刷り上がりを見ながら50mm * 45mm の空白を確保してください．
-\rule{10mm}{0mm}土佐あかうしゲノムデータの双曲埋め込みによる階層クラスタリング\\
-Hyperbolic Embedding-Based Hierarchical Clustering of Tosa Akaushi Genomic Data\\
+\rule{0mm}{0mm}ゲノム選抜のための双曲埋め込みの検討\\
+Exploring Hyperbolic Embedding for Genomic Selection\\
 }
 \vspace*{3pt} 
 { \large
-\begin{tabular}{ccc}
-森 樹伸 & 木脇 太一\\
-S. Mori  & T. Kiwaki\\
+\begin{tabular}{ccccc}
+森 樹伸${}^1$ & 木脇 太一${}^1$ & 小林 栄治${}^2$ & 大江 美香${}^2$ & 荒川 愛作${}^2$ \\ 
+S. Mori${}^1$ & T. Kiwaki${}^1$ & E. Kobayashi${}^2$ & M. Ooe${}^2$ & A. Arakawa${}^2$ \\
 \end{tabular}\\
-（高知大学　大学院）
+\begin{tabular}{cccc}
+近森 太志${}^3$ & 濱田 和希${}^3$ & 山口 亜利沙${}^1$ & 松川 和嗣${}^1$\\
+T. Chikamori${}^3$ & K. Hamada${}^3$& A. Yamaguchi${}^1$& K. Matukawa${}^1$\\
+\end{tabular}\\
+（高知大学${}^1$, 農研機構${}^2$, 高知県畜産試験場${}^3$）
 }
 \end{center}
 \vspace*{12pt} 
 ]
 
-\section{原稿の構成}
-本稿は，電気・電子・情報関係学会四国支部連合大会の原稿執筆について述べる．
-以下のレイアウト，書式に従わない原稿については返戻されることがあるので注意．
+\section{背景}
+近年，畜産分野では，ゲノム情報を用いた育種，すなわちゲノム選抜（GS）が盛んに行われている．
+GSでは，非線形性を捉えるために，機械学習を応用する研究が注目されているが，
+従来の線形モデルと比べ予測精度が常に優れているわけではない．
 
-\subsection{全体のレイアウト}
+その一因として，ゲノムデータ特有の高次元・小サンプル問題が挙げられ，過学習などの問題を引き起こす．
+このため，次元削減などの前処理が重要となる．
 
-\begin{wrapfigure}[14]{l}{40mm}
+そこで本研究では，ゲノムデータが持つ潜在的な階層構造に着目し，
+それとの相性の良さが知られている双曲空間への埋め込みを行うことで，
+データを従来よりも低次元で表現し，
+前述の問題の緩和を目指す．
+なお，本稿では，埋め込み手法の一つ HypHC\cite{hypHC}の実装結果について報告する．
+
+\section{双曲埋め込み}
+\subsection{双曲空間}
+双曲空間は，一定の負の曲率をもつ非ユークリッド空間であり，
+半径の増加に伴い体積が指数的に増加する特性を持つ．
+これにより，階層が深まるにつれてノード数が指数的に増加する木構造（階層構造の一種）を自然に表現できるため，
+階層構造の表現に優れているとされる．
+
+双曲空間を表現するモデルはいくつか存在する．
+例えば，Poincaré ball モデルは $\mathbb{B}^n=\{x\in\mathbb{R}^n\mid\|x\|<1\}$ と定義され，
+単位球内で双曲空間を表現する．
+
+\subsection{HypHC}
+HypHCは，双曲空間（Poincaré ball モデル）上で階層クラスタリング（HC）的にデータを表現するための埋め込み手法である．
+HCは類似度に基づいて，集団の構造を二分木で可視化する手法で，
+類似度の高いペアは木の深部で，類似度の低いペアは根近くで結合する方針を持つ．
+
+Dasguptaのコスト関数は，この方針が木全体でどの程度達成されているかを評価する指標であり，
+HypHCは，埋め込みから再構築される木のコストを最小化するように埋め込みを最適化する．
+
+\section{土佐あかうしのSNPデータ}
+本研究では，土佐あかうしのゲノムデータ，特に，
+SNP（一塩基多型）データを使用する．
+欠損値補完などを行った結果，サンプル数 669 頭，次元数 58,995 SNPとなった．
+現時点で，他手法で必要となる関連データは入手できなかったため，
+SNP のみで実装可能である HypHC を選択した．
+なお，非類似度としてユークリッド距離を用いた．
+
+\section{結果}
+\begin{wrapfigure}[12]{l}{40mm}
 \centering
-\includegraphics[width=40mm]{layout.pdf}
-\caption{余白}
-\label{fig:layout}
+\includegraphics[width=43mm]{fig/SJCIEE_1.png}
+\caption{HypHC (2 次元) の結果}
+\label{fig:Embedding result}
 \end{wrapfigure}
+2 次元の双曲埋め込みの結果を図\ref{fig:Embedding result}に示す．
+灰色の単位円がPoincaré ball モデルであり，青色の点が埋め込まれたデータ，実線が再構築された木を表す．
+木には 4 つのクラスタが見られた．
 
-\textbf{原稿サイズ，分量：} 原稿は\textcolor{red}{A4縦置き}とし，
-分量は\textcolor{red}{1ページを越えてはならない}．
+表\ref{tab:d cost}に 再構築された木の Dasgupta のコストと，
+HC の複数の構築方法（Ward，単，平均，完全）の中で最小のコストとなった ward法のコストを示す．
+なお，埋め込み先の次元を増やすとコストはさらに改善したが，
+50 次元以上では改善が見られなかった．
 
-\textbf{空間・余白：}講演番号等を挿入するため，
-\textcolor{red}{左上端に50 mm $\times$ 45 mm の空間を設けること}．
-上下左右の余白は図\ref{fig:layout}のとおり．空間・余白内には
-ヘッダやフッタ，ページ番号などは入れないこと．
 
-\textbf{タイトル：}
-タイトルは本文より大きい文字を用い，上記空間を避けて記述する．
-日本語論文の場合は必ず英語タイトルを，日本語タイトルの下に併記する．
+\begin{table}[H]
+	\centering
+	\caption{Dasguptaのコストの比較}
+	\label{tab:d cost}
+	\begin{tabular}{|c|c|}
+			\hline
+			 & Dasgupta's cost ($\times 10^{10}$)  \\
+			\hline
+			HypHC (2 次元) & $-5.87$ \\
+			HypHC (50 次元) & $-5.91$  \\
+			\hline
+			HC (Ward 法) & $-5.75$  \\
+			\hline
+	\end{tabular}
+\end{table}
 
-\textbf{著者名：}
-タイトルの下に書く．日本語論文の場合は必ずローマ字の著者名を併記する．
-その書式は``名のイニシャル'' + ピリオド+ ``姓のフルスペル''とする．
-
-\textbf{所属：}
-著者が一人の場合は，``氏名（所属）''のように，著者名に続けて所属を書く．
-著者が複数人の場合は，氏名を書き，行を改めて所属を書く．このとき，
-全ての所属を一組の全角括弧``（ ）''で囲み，
-右肩上付きのアラビア数字でそれぞれの所属を対応させる．
-
-\subsection{本文書式}
-\begin{itemize}
-\itemsep=0pt
-\item \textcolor{red}{本文は二段組とし，10 pt のフォントを使用すること．}
-書体は，和文であれば明朝体，英文であれば Times Roman系フォントを使用し，
-見出し等は和文であればゴシック体，英文であれば bold faceを用いる．
-MS Wordを使用する場合，英文について等幅フォントが適用されないよう
-留意すること．
-\item 和文句点は「．」読点は「，」で，それぞれ全角で記述する．
-\item 全角英数字，半角カタカナは，
-特に使用する必要がある場合以外は避けること．
-\end{itemize}
-
-\subsection{参考文献書式} 
-文献は，本文中で\cite{shikoku} のように出現順に番号で参照し，
-論文末尾に参考文献リストを構成する．
-また，リストの見出し「参考文献」には節番号を振らない．
-リスト記述例は本稿末尾を参照のこと．
-
-\section{PDF作成}
-\label{sec:pdf}
-投稿された原稿は，論文番号，ページ番号，会議名称などが
-PDFレベルで追加加工された上で，論文集に収録される．
-PDFのスクリーン上の見栄え，印刷刷り上がり品質について，
-以下を参照のうえ，著者自身で調整すること．
-
-\subsection{ファイルサイズ}
-論文集配布の都合上，
-\textcolor{red}{原稿のファイルサイズ上限は1MByte 以内とする．}
-\ref{sec:images}節にも関係するが，上限を超過するようであれば，
-データの適切な間引きや，画像品質調整を検討すること．
-
-\subsection{フォントの埋め込み}
-原稿内の全てのフォントについて確実に埋め込むこと．
-たとえば Acrobat では ファイル→ プロパティ→ フォントと進み，
-全てのフォントについて「埋め込みサブセット」となっているかを確認する．
-埋め込みができていないフォントについては，
-PDF閲覧・印刷環境によっては文字化け，文字抜けが発生する可能性がある．
-特に図表内で用いられたテキストについて注意のこと．
-
-\subsection{画像等の解像度}
-\label{sec:images}
-画像等は600 dpi 以内で高品質な仕上がりになるよう調整する．
-A4刷り上がりで十分視認性を確保すること．
-アンチエイリアシングやジャギーの発生に注意すること．
-
-\subsection{セキュリティ設定とハイパーテキスト}
-\textcolor{red}{PDF ファイルにはセキュリティを設定しないこと．}
-また，ハイパーテキスト，しおり，メタデータは，
-\ref{sec:pdf}節冒頭に述べた加工により削除・毀損されることがあり，
-加工後のPDFにおいてはそれらの完全性は保証されない．
+\section{考察・展望}
+図\ref{fig:Embedding result}で 4 クラスタが見られたが，
+これが何を意味するかは，血統情報などとの関係を調べ明らかにする必要がある．
+また，50 次元の埋め込みでコストの改善が収束したことから，
+HypHC では，50次元への次元削減を達成したと考えられる．
+いずれにせよ，埋め込みの良し悪しは，
+GSにおける予測精度で評価するべきであり，今後の課題とする．
 
 \begin{thebibliography}{9}
-\bibitem{shikoku}
-電気 太郎, 四国 次郎,
-``DC/DC コンバータを用いた形態素解析の一考察,''
-電気情報未来研究論文誌, No. 4, pp. 125--128, Nov. 2020. 
+% \bibitem{review} 
+% N. Chafai, I. Hayah, I. Houaga and B. Badaoui, 
+% ``A review of machine learning  models applied to genomic  prediction in animal breeding,''
+% \textsl{Frontiers in Genetics}, vol. 14, article 1150596, 2023.
 %
-\bibitem{SJCIEE} 
-S. Jaycie and I. Eyeyeah, 
-\textsl{Beyond the DX}, Virtual Publisher, New York, 2019.
+\bibitem{hypHC} 
+I. Chami, A. Gu, V. Chatziafratis and C. Ré, 
+``From Trees to Continuous Embeddings and Back:  Hyperbolic Hierarchical Clustering,''
+\textsl{NeurIPS}, vol. 33, pp. 15065 - 15076, 2020.
 %
-\bibitem{web}
-電気・電子・情報関係学会四国支部連合大会, 
-\url{https://sjciee.org} (2021年5月15日 参照)
+% \bibitem{web}
+% 電気・電子・情報関係学会四国支部連合大会, 
+% \url{https://sjciee.org} (2021年5月15日 参照)
 \end{thebibliography}
 
 \end{document}
