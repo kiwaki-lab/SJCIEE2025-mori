@@ -104,13 +104,13 @@ HypHCは，双曲空間（Poincaré ball モデル）上で
 階層クラスタリング（Hierarchical Clustering, HC）的にデータを表現するための埋め込み手法である\cite{hypHC}．
 HCは類似度に基づき，集団の構造を二分木で可視化する手法で，
 類似度の高いペアは木の深部で，類似度の低いペアは根近くで結合するという方針を持つ．
-この方針の木全体での達成度を評価する指標として Dasgupta のコスト関数があり，
-HypHCは，埋め込みから再構築される二分木のコストを最小化するように埋め込みを最適化する．
+この方針の木全体における達成度を評価する指標として，Dasguptaのコスト関数がある．
+HypHCは，埋め込みから再構築される二分木に関してDasguptaのコストを最小化するように埋め込みを行う．
 
 \section{土佐あかうしのSNPデータ}
 本研究では，土佐あかうしを対象とし，GSで広く用いられる
 一塩基多型（Single Nucleotide Polymorphism, SNP）データ（669 頭 $\times$ 58,995 SNP）を使用する．
-埋め込み手法は HypHC を選択し，非類似度としてユークリッド距離を用いた．
+埋め込み手法はHypHCを選択し，非類似度としてユークリッド距離を用いた．
 
 \section{結果}
 \begin{wrapfigure}[11]{l}{40mm}
@@ -121,7 +121,7 @@ HypHCは，埋め込みから再構築される二分木のコストを最小化
 \caption{HypHC (2 次元) の結果}
 \label{fig:Embedding result}
 \end{wrapfigure}
-図\ref{fig:Embedding result}に 2 次元双曲空間への埋め込みの結果を示す．
+図\ref{fig:Embedding result}に 2次元双曲空間への埋め込みの結果を示す．
 灰色の円はPoincaré ball モデル，青点は埋め込まれたデータ，実線は再構築された木を表す．
 木は閾値 0.6 で 4 クラスタに分割され，図\ref{fig:Embedding result}でも定性的に確認できる．
 
@@ -160,14 +160,13 @@ GSにおける予測精度で評価するべきであり，今後の課題とす
 
 \begin{thebibliography}{9}
  \bibitem{GS} 
- N. Chafai, I. Hayah, I. Houaga and B. Badaoui, 
- ``A review of machine learning  models applied to genomic  prediction in animal breeding,''
- \textsl{Frontiers in Genetics}, vol. 14, article 1150596, 2023.
+Chafai et. al., ``A review of machine learning  models applied to genomic  prediction in animal breeding,''
+ \textsl{Front. Genet.}, 14, article 1150596, 2023.
 %
 \bibitem{hypHC} 
 I. Chami, A. Gu, V. Chatziafratis and C. Ré, 
 ``From Trees to Continuous Embeddings and Back:  Hyperbolic Hierarchical Clustering,''
-\textsl{NeurIPS}, vol. 33, pp. 15065 - 15076, 2020.
+\textsl{NeurIPS}, 33, pp. 15065 - 15076, 2020.
 %
 % \bibitem{web}
 % 電気・電子・情報関係学会四国支部連合大会, 
