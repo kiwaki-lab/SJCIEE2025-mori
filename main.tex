@@ -104,7 +104,7 @@ HypHCは，双曲空間（Poincaré ball モデル）上で
 階層クラスタリング（Hierarchical Clustering, HC）的にデータを表現するための埋め込み手法である\cite{hypHC}．
 HCは類似度に基づき，集団の構造を二分木で可視化する手法で，
 類似度の高いペアは木の深部で，類似度の低いペアは根近くで結合するという方針を持つ．
-この方針の木全体における達成度を評価する指標として，Dasguptaのコスト関数がある．
+この方針の木全体における達成度を評価する指標として，Dasguptaのコスト関数\cite{dasgupta}がある．
 HypHCは，埋め込みから再構築される二分木に関してDasguptaのコストを最小化するように埋め込みを行う．
 
 \section{土佐あかうしのSNPデータ}
@@ -113,11 +113,11 @@ HypHCは，埋め込みから再構築される二分木に関してDasguptaの�
 埋め込み手法はHypHCを選択し，非類似度としてユークリッド距離を用いた．
 
 \section{結果}
-\begin{wrapfigure}[11]{l}{40mm}
-\vspace{-0.3ex} % ← 図全体の位置を詰める（上）
-\setlength{\abovecaptionskip}{-10pt}
+\begin{wrapfigure}[12]{l}{46mm}
+\vspace{-2ex} % ← 図全体の位置を詰める（上）
+\setlength{\abovecaptionskip}{-2pt}
 \centering
-\includegraphics[width=43mm]{fig/SJCIEE_1.png}
+\includegraphics[width=48mm]{fig/SJCIEE_1.png}
 \caption{HypHC (2 次元) の結果}
 \label{fig:Embedding result}
 \end{wrapfigure}
@@ -167,9 +167,9 @@ Chafai et. al., ``A review of machine learning  models applied to genomic  predi
 Chami et. al., ``From Trees to Continuous Embeddings and Back:  Hyperbolic Hierarchical Clustering,''
 \textsl{NeurIPS}, 33, pp.~15065-15076, 2020.
 %
-% \bibitem{web}
-% 電気・電子・情報関係学会四国支部連合大会, 
-% \url{https://sjciee.org} (2021年5月15日 参照)
+\bibitem{dasgupta}
+Dasgupta, ``A Cost Function for Similarity-Based Hierarchical Clustering,''
+\textsl{STOC}, pp.~118-127, 2016.
 \end{thebibliography}
 
 \end{document}
